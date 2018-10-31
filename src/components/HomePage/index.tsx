@@ -6,16 +6,7 @@ import { Button, Carousel, Loader, ProductListItem } from "..";
 import { generateCategoryUrl, generateProductUrl } from "../../core/utils";
 import { GET_PRODUCTS_AND_CATEGORIES } from "./queries";
 
-import { ProductsList } from "../../core/types/saleor";
 import "./scss/index.scss";
-
-const canDisplay = (data: ProductsList) =>
-  data &&
-  data.shop &&
-  data.shop.homepageCollection &&
-  data.shop.homepageCollection &&
-  data.categories &&
-  data.categories.edges;
 
 const HomePage: React.SFC = () => (
   <div className="home-page">
@@ -25,6 +16,13 @@ const HomePage: React.SFC = () => (
       errorPolicy="all"
     >
       {({ error, data }) => {
+        const canDisplay =
+          data &&
+          data.shop &&
+          data.shop.homepageCollection &&
+          data.shop.homepageCollection &&
+          data.categories &&
+          data.categories.edges;
         if (canDisplay(data)) {
           return (
             <>

@@ -6,8 +6,7 @@ import { Link } from "react-router-dom";
 import ReactSVG from "react-svg";
 
 import { Button, Loader } from "..";
-import { getCheckout } from "../../core/types/saleor";
-import { baseUrl, checkoutLoginUrl } from "../App/routes";
+import { checkoutLoginUrl } from "../App/routes";
 import { CartContext } from "../CartProvider/context";
 import { GET_CHECKOUT } from "../CheckoutApp/queries";
 import { GoToCheckout } from "../GoToCheckout";
@@ -16,9 +15,6 @@ import { EmptyCart } from "./EmptyCart";
 
 import { smallScreen } from "../App/scss/variables.scss";
 import "./scss/index.scss";
-
-const canDisplay = (data: getCheckout) =>
-  data && data.checkout && data.checkout.lines && data.checkout.subtotalPrice;
 
 const CartPage: React.SFC<RouteComponentProps<{ token }>> = ({
   match: {
@@ -35,6 +31,11 @@ const CartPage: React.SFC<RouteComponentProps<{ token }>> = ({
         errorPolicy="all"
       >
         {({ error, data }) => {
+          const canDisplay =
+            data &&
+            data.checkout &&
+            data.checkout.lines &&
+            data.checkout.subtotalPrice;
           if (canDisplay(data)) {
             const { checkout } = data;
             const lines = checkout ? checkout.lines : [];

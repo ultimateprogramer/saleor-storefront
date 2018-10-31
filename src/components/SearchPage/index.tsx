@@ -8,20 +8,11 @@ import { PRODUCTS_PER_PAGE } from "../../core/config";
 import { debounce } from "../../core/utils";
 import { GET_SEARCH_PRODUCTS } from "./queries";
 
-import { SearchProducts } from "../../core/types/saleor";
 import "./scss/index.scss";
 
 interface AttributesType {
   [x: string]: string[];
 }
-
-const canDisplay = (data: SearchProducts) =>
-  data &&
-  data.attributes &&
-  data.attributes.edges &&
-  data.products &&
-  data.products.edges &&
-  data.products.totalCount;
 
 class SearchPage extends React.Component<
   RouteComponentProps<{}>,
@@ -97,6 +88,13 @@ class SearchPage extends React.Component<
           errorPolicy="all"
         >
           {({ error, data, loading }) => {
+            const canDisplay =
+              data &&
+              data.attributes &&
+              data.attributes.edges &&
+              data.products &&
+              data.products.edges &&
+              data.products.totalCount;
             if (canDisplay(data)) {
               return (
                 <ProductsList

@@ -15,8 +15,6 @@ interface RouteParams {
 }
 type ArticleViewProps = RouteComponentProps<RouteParams>;
 
-const canDisplay = data =>
-  data && data.page && data.page.title && data.page.content;
 const getHeaderImage = data =>
   data &&
   data.shop &&
@@ -41,7 +39,8 @@ export const ArticleView: React.SFC<ArticleViewProps> = ({
         ...page,
         active: page.url === window.location.pathname
       }));
-
+      const canDisplay =
+        data && data.page && data.page.title && data.page.content;
       if (canDisplay(data)) {
         const breadcrumbs = [
           {

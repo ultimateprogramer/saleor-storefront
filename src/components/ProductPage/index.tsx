@@ -13,7 +13,6 @@ import {
   ProductDescription,
   ProductListItem
 } from "..";
-import { ProductDetails } from "../../core/types/saleor";
 import {
   generateCategoryUrl,
   generateProductUrl,
@@ -24,15 +23,6 @@ import { CartContext } from "../CartProvider/context";
 import { GET_PRODUCT_DETAILS } from "./queries";
 
 import "./scss/index.scss";
-
-const canDisplay = (data: ProductDetails) =>
-  data &&
-  data.product &&
-  data.product.description &&
-  data.product.name &&
-  data.product.price &&
-  data.product.variants &&
-  data.product.variants.edges;
 
 class ProductPage extends React.Component<RouteComponentProps<{ id }>, {}> {
   fixedElement: React.RefObject<HTMLDivElement> = React.createRef();
@@ -77,6 +67,14 @@ class ProductPage extends React.Component<RouteComponentProps<{ id }>, {}> {
         errorPolicy="all"
       >
         {({ error, data }) => {
+          const canDisplay =
+            data &&
+            data.product &&
+            data.product.description &&
+            data.product.name &&
+            data.product.price &&
+            data.product.variants &&
+            data.product.variants.edges;
           if (canDisplay(data)) {
             const { product } = data;
             return (

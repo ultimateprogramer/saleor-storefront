@@ -11,22 +11,11 @@ import {
 } from "../../core/utils";
 import { GET_CATEGORY_AND_ATTRIBUTES } from "./queries";
 
-import { Category } from "../../core/types/saleor";
 import "./scss/index.scss";
 
 interface AttributesType {
   [x: string]: string[];
 }
-
-const canDisplay = (data: Category) =>
-  data &&
-  data.attributes &&
-  data.attributes.edges &&
-  data.products &&
-  data.products.edges &&
-  data.products.totalCount &&
-  data.category &&
-  data.category.name;
 
 class CategoryPage extends React.Component<
   RouteComponentProps<{ id }>,
@@ -103,6 +92,15 @@ class CategoryPage extends React.Component<
         errorPolicy="all"
       >
         {({ loading, error, data }) => {
+          const canDisplay =
+            data &&
+            data.attributes &&
+            data.attributes.edges &&
+            data.products &&
+            data.products.edges &&
+            data.products.totalCount &&
+            data.category &&
+            data.category.name;
           if (!loading && canDisplay(data)) {
             return (
               <div className="category">
